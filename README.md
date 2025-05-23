@@ -1,34 +1,19 @@
 1. Introduction
-In recent years, ESG (environmental, social, and governance) has garnered much attention from investors and regulators as a key indicator of corporate sustainability. Several studies have been devoted to exploring the predictive effects of financial indicators on ESG scores: for example, Whelan, Atz, and Clark (2021), after reviewing more than 1,000 studies, point out that ESG is generally positively correlated with factors such as operational efficiency, stock returns, and cost of capital. While D'Amato, D' D'Ecclesia, and Levantesi (2021) investigated the relationship between ROE, EBITDA, market capitalisation, and ESG scores using a random forest model. Meanwhile, Friede et al. (2015) found that ‘ESG tends to be positively or insignificantly negatively associated with firms’ financial performance’. Khan et al. (2016) remind us that the industry in which firms operate has a “substantive screening” effect on ESG issues, and that industries differ significantly in terms of their sustainability challenges and regulatory environments, which must be included in the assessment. 
-Since many companies do not disclose specific ESG sub-indicators, investors still need to measure the sustainability performance of these companies. This study uses financial metrics (e.g., ROE, EBITDA, market cap) and industry context from S&P 500 companies (via Yahoo Finance), combined with machine learning models, to explore two key questions:
-Can financial and industry information effectively predict the ESG scores or ratings of enterprises? 
-Do different industries show specific patterns or subgroups in the relationship between ESG and financial data? 
-
+In recent years, ESG (environmental, social, and governance) has garnered much attention from investors and regulators as a key indicator of corporate sustainability. Several studies have been devoted to exploring the predictive effects of financial indicators on ESG scores: for example, Whelan, Atz, and Clark (2021), after reviewing more than 1,000 studies, point out that ESG is generally positively correlated with factors such as operational efficiency, stock returns, and cost of capital. While D'Amato, D' D'Ecclesia, and Levantesi (2021) investigated the relationship between ROE, EBITDA, market capitalisation, and ESG scores using a random forest model. Meanwhile, Friede et al. (2015) found that ‘ESG tends to be positively or insignificantly negatively associated with firms’ financial performance’. Khan et al. (2016) remind us that the industry in which firms operate has a “substantive screening” effect on ESG issues, and that industries differ significantly in terms of their sustainability challenges and regulatory environments, which must be included in the assessment. Since many companies do not disclose specific ESG sub-indicators, investors still need to measure the sustainability performance of these companies. This study uses financial metrics (e.g., ROE, EBITDA, market cap) and industry context from S&P 500 companies (via Yahoo Finance), combined with machine learning models, to explore two key questions: Can financial and industry information effectively predict the ESG scores or ratings of enterprises? Do different industries show specific patterns or subgroups in the relationship between ESG and financial data? 
 
 
 2. Data description
-Based on the data provided by Yahoo Finance, the S&P 500 constituent companies were used as the basis for this study, and finally, 437 companies were screened out, with complete data and no obvious deficiencies. There are three main categories of information including:
-
-Category
-Indicators
-Function
+Based on the data provided by Yahoo Finance, the S&P 500 constituent companies were used as the basis for this study, and finally, 437 companies were screened out, with complete data and no obvious deficiencies. There are three main categories of information including: Category, Indicators, Function
 Financial Metrics
-ROE 
-A measure of a company's profitability, with higher values generally representing stronger shareholder returns
-EBITDA 
-Reflects the company's core operating performance, excluding the impact of interest, taxes, depreciation, and amortization
-Market Cap 
-It reflects the scale of the enterprise, which is usually positively related to the status and popularity of the enterprise in the industry
+ROE: A measure of a company's profitability, with higher values generally representing stronger shareholder returns
+EBITDA: Reflects the company's core operating performance, excluding the impact of interest, taxes, depreciation, and amortization
+Market Cap: It reflects the scale of the enterprise, which is usually positively related to the status and popularity of the enterprise in the industry
 ESG Metrics
-esg_score 
-The company's comprehensive score in environmental, social, and governance aspects is higher the value, the better the sustainability performance
-esg_cat 
-According to the total score, enterprises are divided into LAG_PERF (lagging), AVG_PERF (average), LEAD_PERF (leading), and other grades
+esg_score: The company's comprehensive score in environmental, social, and governance aspects is higher the value, the better the sustainability performance
+esg_cat: According to the total score, enterprises are divided into LAG_PERF (lagging), AVG_PERF (average), LEAD_PERF (leading), and other grades
 Industry Classification
-Sector 
-11 major sectors, e.g,. Energy, Technology, Consumer Defensive, etc.
-Industry 
-60+ more specific industry categories, e.g., ‘Oil & Gas E&P’, ‘Semiconductors’, ‘Pharmaceuticals ’
+Sector: 11 major sectors, e.g,. Energy, Technology, Consumer Defensive, etc.
+Industry: 60+ more specific industry categories, e.g., ‘Oil & Gas E&P’, ‘Semiconductors’, ‘Pharmaceuticals ’
 
 3. Exploratory Data Analysis
 Preliminary statistics show that the mean total ESG score (esg_score) is around 20.63, with a standard deviation of 6.74. The direct correlation between traditional financial metrics and ESG is relatively limited.
@@ -37,10 +22,12 @@ After applying a logarithmic transformation, the correlation between log(EBITDA)
 
 When analysed with industry data, we see that industry background has a relatively more significant impact on ESG levels, with sectors like energy, utilities, and basic materials scoring higher, while communication services, real estate, and some consumer sectors score lower. This highlights clear structural differences. We also find that the relationship between ROE and ESG varies significantly across industries (e.g., similar profitability yields different ESG outcomes in energy vs. technology), suggesting that industry acts not just as context but as a moderator in ESG-finance dynamics.
 
+
 4. Methodology
 To solve the problem, 4 models will be fitted for regression analysis of the ESG score, and 4 models will be considered for classification of the ESG category. Naive, Random Forest, XGBoost and Support Vector Machine will be used in both tasks, having the following pipeline:
 
 5. Model Analysis
+
 5.1.1 Random Forest Classification
 The best-performing Random Forest classifier used 300 trees, 35 features, and a maximum depth of 9. Random Forest achieved a classification accuracy of 66.7%. The matrix below shows the normalized proportion of correct and incorrect predictions across ESG performance categories.
 
@@ -69,7 +56,6 @@ The residuals are centered around zero, indicating that the XGBoost regression m
 
 Similar to its classification, the XGBoost regression relies heavily on industry-related features. Sector_Energy and Sector_Technology top the list, indicating that ESG scores are more strongly influenced by industry affiliation than traditional financial metrics. Financial variables like market capitalization and EBITDA are noticeably absent from the top contributors, suggesting that XGBoost detects patterns within specific sectors that may correlate with ESG outcomes.
 
-
 5.3.1 SVM Classification
 The optimal SVM classifier used a regularization parameter C=1, a radial basis function (RBF) kernel, and gamma set to 'scale'. SVM produced the highest classification accuracy at 67.9%, slightly outperforming Random Forest.
 
@@ -89,7 +75,6 @@ As a benchmark:
 Classification Accuracy: 47.4%
 Regression MAPE: 31.4%
 This confirms that machine learning significantly improves ESG prediction over basic heuristics.
-
 
 5.5 Model Comparison Summary 
 Model
@@ -117,7 +102,6 @@ Naive
 31.4%
 —
 Baseline only
-
 
 6. Conclusions and prospects
 After a comprehensive analysis of ESG data and financial indicators of the companies, we mainly draw the following conclusions:
