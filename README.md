@@ -17,6 +17,7 @@ Industry: 60+ more specific industry categories, e.g., ‘Oil & Gas E&P’, ‘S
 
 3. Exploratory Data Analysis
 Preliminary statistics show that the mean total ESG score (esg_score) is around 20.63, with a standard deviation of 6.74. The direct correlation between traditional financial metrics and ESG is relatively limited.
+![image](https://github.com/user-attachments/assets/b28c2e8c-621c-40b1-9b87-dfbbc3d68a51)
 
 After applying a logarithmic transformation, the correlation between log(EBITDA) and ESG scores increases slightly to 0.17, while log(Market Cap) remains largely uncorrelated. Though statistically weak, this relationship is meaningful in practice, as ESG scores are shaped by numerous qualitative and non-financial factors. A 0.17 correlation suggests that EBITDA explains 17% of the variation in ESG scores, a noteworthy insight given the complexity of ESG evaluation. This highlights the role of profitability in influencing sustainability outcomes. Even if it's not the primary driver, incorporating financial metrics adds value to ESG modeling, supporting better decision-making and reinforcing the link between financial and ESG performance.
 
